@@ -42,3 +42,31 @@ Contracts:
 
 - Foundry: `pnpm -C packages/contracts build:forge`, `test:forge`
 - Hardhat: `pnpm -C packages/contracts build:hardhat`, `test:hardhat`
+
+## 🏷️ ENS Integration Guide
+
+### Supported Features
+- Resolve .eth names to addresses
+- Display ENS avatars
+- Primary name resolution
+- Text records support
+
+### Implementation
+```typescript
+import { useEnsName, useEnsAvatar } from 'wagmi';
+
+// Resolve ENS name
+const { data: ensName } = useEnsName({
+  address: '0x...',
+});
+
+// Get ENS avatar
+const { data: ensAvatar } = useEnsAvatar({
+  name: ensName,
+});
+```
+
+### Caching Strategy
+- Cache ENS lookups for 5 minutes
+- Invalidate on block updates
+- Fallback to address display
